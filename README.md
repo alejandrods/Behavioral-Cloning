@@ -13,7 +13,7 @@ validation track.
 
 Example of our final model:
 
-![training_img](./examples/behaviour_prj_ex.gif)
+![training_img](https://github.com/alejandrods/Behavioral-Cloning/tree/master/examples/behaviour_prj_ex.gif)
 
 ### Dependencies
 
