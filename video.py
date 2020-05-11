@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from moviepy.editor import ImageSequenceClip
 import argparse
 

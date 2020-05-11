@@ -1,14 +1,19 @@
-# Self-Driving Car Engineer Nanodegree
-# Deep Learning
-## Behavioral Cloning: Navigating a Car in a Simulator
+# Behavioral Driving Cloning: Navigating a Car in a Simulator
 
 ### Overview
 
-The objective of this project is to clone human driving behavior using a Deep Neural Network. In order to achieve this, we are going to use a simple Car Simulator. During the training phase, we navigate our car inside the simulator using the keyboard. While we navigating the car the simulator records training images and respective steering angles. Then we use those recorded data to train our neural network. Trained model was tested on two tracks, namely training track and validation track. Following two animations show the performance of our final model in both training and validation tracks.
+The objective of this project is to clone human driving behavior 
+using a Deep Neural Network. In order to achieve this, we are going 
+to use a simple Car Simulator. During the training phase, we navigate 
+our car inside the simulator using the keyboard. While we navigating 
+the car the simulator records training images and respective steering 
+angles. Then we use those recorded data to train our neural network. 
+Trained model was tested on two tracks, namely training track and 
+validation track. 
 
-Training | Validation
-------------|---------------
-![training_img](./images/track_one.gif) | ![validation_img](./images/track_two.gif)
+Example of our final model:
+
+![training_img](./examples/behaviour_prj_ex.gif)
 
 ### Dependencies
 
@@ -31,7 +36,7 @@ Run this command at the terminal prompt to install [OpenCV](http://opencv.org/).
 
 This repository comes with trained model which you can directly test using the following command.
 
-- `python drive.py model.json`
+- `python drive.py ./model/model_a2.h5`
 
 ## Implementation
 
@@ -41,7 +46,7 @@ During the training, the simulator captures data with a frequency of 10hz. Also,
 
 Left| Center | Right
 ----|--------|-------
-![left](./images/left.png) | ![center](./images/center.png) | ![right](./images/right.png)
+![left](./examples/left.png) | ![center](./examples/center.png) | ![right](./examples/right.png)
 
 Collected data are processed before feeding into the deep neural network and those preprocessing steps are described in the latter part of this file. 
 
@@ -53,33 +58,24 @@ Next, we are going explain our data processing pipeline.
 ### Data Processing Pipeline
 The following figure shows our data preprocessing pipeline.
 
-<p align="center">
- <img src="./images/pipeline.png" width="550">
-</p>
+![](./examples/pipeline.png)
 
 In the very first state of the pipeline, we apply random shear operation. However, we select images with 0.9 probability for the random shearing process. We kept 10 percent of original images and steering angles in order to help the car to navigate in the training track. The following figure shows the result of shearing operation applied to a sample image.
 
-<p align="center">
- <img src="./images/sheared.png">
-</p>
+![](./examples/sheared.png)
 
 The images captured by the simulator come with a lot of details which do not directly help model building process.  In addition to that extra space occupied by these details required additional processing power. Hence, we remove 35 percent of the original image from the top and 10 percent. This process was done in crop stage. The following figure shows the result of cropping operation applied to an image.
 
-<p align="center">
- <img src="./images/cropped.png">
-</p>
+![](./examples/cropped.png)
+
 
 The next stage of the data processing pipeline is called random flip stage. In this stage we randomly (with 0.5 probability) flip images. The idea behind this operation is left turning bends are more prevalent than right bends in the training track. Hence, in order to increase the generalization of our mode, we flip images and respective steering angles. The following figure shows the result of flipping operation applied to an image.
 
-<p align="center">
- <img src="./images/flipped.png">
-</p>
+![](./examples/flipped.png)
 
 In the final state of the pipeline, we resize images to 64x64 in order to reduce training time. A sample resized image is shown in the following figure. Resized images are fed into the neural network. The following figure shows the result of resize operation applied to an image.
 
-<p align="center">
- <img src="./images/resized.png">
-</p>
+![](./examples/resized.png)
 
 Next we are going to discuss our neural network architecture.
 
@@ -87,9 +83,7 @@ Next we are going to discuss our neural network architecture.
 
 Our convolutional neural network architecture was inspired by NVIDIA's End to End Learning for Self-Driving Cars paper. The main difference between our model and the NVIDIA mode is than we did use MaxPooling layers just after each  Convolutional Layer in order to cut down training time. For more details about our network architecture please refer following figure.
 
-<p align="center">
- <img src="./images/conv_architecture.png" height="600">
-</p>
+![](./examples/conv_architecture.png)
 
 ### Training
 Even after cropping and resizing training images (with all augmented images), training dataset was very large and it could not fit into the main memory. Hence, we used `fit_generator` API of the Keras library for training our model.

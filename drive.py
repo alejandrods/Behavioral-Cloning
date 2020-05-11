@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import argparse
 import base64
 from datetime import datetime
@@ -61,11 +63,7 @@ def telemetry(sid, data):
         # The current image from the center camera of the car
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
-        
-        #image_array = np.asarray(image)
-        #image_array = cv2.resize(image_array, (80, 320))
-        #steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
-        
+
         image_array = np.asarray(image)
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
